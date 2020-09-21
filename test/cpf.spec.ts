@@ -1,5 +1,5 @@
 /**
- * country/brazil/cpf spec file
+ * cpf spec file
  **/
 
 import { CPF } from '../src';
@@ -61,7 +61,7 @@ describe('country / brazil / cpf', () => {
 		});
 	});
 
-	describe('check', () => {
+	describe('test', () => {
 		test('Should return true for a given valid CPF.Cpf (default Options)', () => {
 			const cpf: CPF.Cpf = CPF.make();
 			const expected = true;
@@ -119,24 +119,24 @@ describe('country / brazil / cpf', () => {
 		});
 	});
 
-	describe('create', () => {
-		test('Should create a new random formated (by default) Cpf', () => {
+	describe('make', () => {
+		test('Should make a new random formated (by default) Cpf', () => {
 			const cpf: CPF.Cpf = CPF.make();
 			expect(cpf.length).toBe(CPF.CPF_FORMATED_LENGTH);
 		});
 
-		test('Should create a new random unmasked Cpf', () => {
+		test('Should make a new random unmasked Cpf', () => {
 			const cpf: CPF.Cpf = CPF.make({ strict: false });
 			expect(cpf.length).toBe(CPF.CPF_UNMASKED_LENGTH);
 		});
 
-		test('Should create a new random formated Cpf with given region', () => {
+		test('Should make a new random formated Cpf with given region', () => {
 			const fiscalRegion: CPF.FiscalRegion = CPF.FiscalRegion.FR01;
 			const cpf: CPF.Cpf = CPF.make({ strict: true, fiscalRegion: fiscalRegion });
 			expect(cpf[CPF.CPF_FORMATED_FISCAL_REGION_DIGIT_INDEX]).toBe(`${fiscalRegion}`);
 		});
 
-		test('Should create a new random unmasked Cpf with given region', () => {
+		test('Should make a new random unmasked Cpf with given region', () => {
 			const fiscalRegion: CPF.FiscalRegion = CPF.FiscalRegion.FR01;
 			const cpf: CPF.Cpf = CPF.make({ strict: false, fiscalRegion: fiscalRegion });
 			expect(cpf[CPF.CPF_UNMASKED_FISCAL_REGION_DIGIT_INDEX]).toBe(`${fiscalRegion}`);

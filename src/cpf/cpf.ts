@@ -170,7 +170,7 @@ export function test(cpf: Cpf, { strict = false }: Options = {}): boolean {
 	const base = cpf.replace(cpfDigitRegex, '');
 
 	/** CPF length must be 11 and must not be a sequence */
-	if (base.length !== 11 || sequence(base)) {
+	if (base.length !== CPF_UNMASKED_LENGTH || sequence(base)) {
 		return false;
 	}
 
@@ -232,7 +232,7 @@ export function digit(base: string): number {
 			.replace(cpfDigitRegex, '')
 			.split('')
 			.map((number, index, origin) => Number(number) * (origin.length + 1 - index))
-			.reduce((accumulator, number) => accumulator + number) % CPF_UNMASKED_LENGTH;
+			.reduce((accumulator, number) => accumulator + number) % 11;
 
 	return [CPF_UNMASKED_LENGTH - digit, 0][Number(digit < cpfDigitLength)];
 }
