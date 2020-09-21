@@ -1,0 +1,16 @@
+{
+	"compilerOptions": {
+		"target": "ES5",
+		"lib": ["ES2015", "DOM"],
+		"module": "CommonJS",
+		"declaration": true,
+		"declarationMap": true,
+		"strict": true,
+		"noImplicitAny": true,
+		"alwaysStrict": true,
+		"esModuleInterop": true,
+		"forceConsistentCasingInFileNames": true,
+		"outDir": "dist"
+	},
+	"exclude": [".script", "coverage", "dist", "node_modules", "test"]
+}

@@ -1,0 +1,40 @@
+{
+	"name": "validocs",
+	"version": "1.0.0",
+	"description": "Validator for multiple documents",
+	"main": "./index.js",
+	"types": "./index.d.ts",
+	"contributors": [
+		"Fabio Marciano"
+	],
+	"scripts": {
+		"test": "jest --bail --forceExit --detectOpenHandles --runInBand --logHeapUsage",
+		"test:watch": "jest --bail --forceExit --detectOpenHandles --runInBand --logHeapUsage --watchAll",
+		"test:coverage": "jest --coverage",
+		"lint": "eslint . --ext .ts",
+		"build": "rm -rf dist && tsc && node ./.script/pre-publish.js && cp ./README.md dist/ && cp ./LICENSE dist/ && npm pack ./dist"
+	},
+	"keywords": [
+		"document",
+		"validator",
+		"cpf"
+	],
+	"author": {
+		"name": "Fabio Marciano"
+	},
+	"license": "MIT",
+	"repository": {
+		"type": "git",
+		"url": "git://github.com/FabioMarciano/validocs.git"
+	},
+	"devDependencies": {
+		"@types/jest": "^26.0.14",
+		"@typescript-eslint/eslint-plugin": "^4.1.1",
+		"@typescript-eslint/parser": "^4.1.1",
+		"eslint": "^7.9.0",
+		"jest": "^26.4.2",
+		"ts-jest": "^26.3.0",
+		"ts-node": "^9.0.0",
+		"typescript": "^4.0.3"
+	}
+}

@@ -1,0 +1,4 @@
+{
+	"package": "package.json",
+	"exclude": ["scripts", "devDependencies"]
+}
