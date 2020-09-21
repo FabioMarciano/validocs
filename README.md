@@ -1,4 +1,4 @@
-# DOC Check
+# Validocs
 
 Validator for multiple documents.
 
