@@ -12,7 +12,7 @@
 		"test:watch": "jest --watchAll",
 		"test:coverage": "jest --coverage",
 		"lint": "eslint . --ext .ts",
-		"build": "rm -rf dist && tsc && node ./.script/pre-publish.js && cp ./README.md dist/ && cp ./LICENSE dist/ && npm pack ./dist"
+		"build": "rm -rf dist && tsc && ./node_modules/.bin/ts-node ./.script/pre-publish.ts && cp ./README.md dist/ && cp ./LICENSE dist/ && npm pack ./dist"
 	},
 	"keywords": [
 		"document",
