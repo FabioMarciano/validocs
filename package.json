@@ -9,7 +9,7 @@
 	],
 	"scripts": {
 		"test": "jest --bail --forceExit --detectOpenHandles --runInBand --logHeapUsage",
-		"test:watch": "jest --bail --forceExit --detectOpenHandles --runInBand --logHeapUsage --watchAll",
+		"test:watch": "jest --watchAll",
 		"test:coverage": "jest --coverage",
 		"lint": "eslint . --ext .ts",
 		"build": "rm -rf dist && tsc && node ./.script/pre-publish.js && cp ./README.md dist/ && cp ./LICENSE dist/ && npm pack ./dist"
