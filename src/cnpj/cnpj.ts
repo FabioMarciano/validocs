@@ -1,6 +1,6 @@
 /**
- * EZ Validator library
- * Module: Cnpj (Cadastro Nacional de Pessoas Jurídicas)
+ * Validocs - document and pattern validator library.
+ * Module: CNPJ (Cadastro Nacional de Pessoas Jurídicas)
  */
 
 /**

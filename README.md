@@ -1,6 +1,6 @@
 # Validocs
 
-Validator for multiple documents.
+**Validocs** is a document and patterns validator library.
 
 # Collaborators
 
@@ -15,19 +15,19 @@ This project is licensed under the terms of the MIT license.
 ## Install
 
 ```shell
-$ npm install validocs
+$ npm install validocs --save
 ```
 
 ## Usage
 
-Import one module to use:
+Import and use a module:
 
 ```typescript
 import CPF from 'validocs/cpf';
 
 const cpf: CPF.Cpf = CPF.make();
 
-console.log('CPF number:', cpf);
+console.log(`Generated CPF number: ${cpf}`);
 ```
 
 # Documentation

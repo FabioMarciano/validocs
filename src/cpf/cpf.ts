@@ -1,6 +1,6 @@
 /**
- * EZ Validator library
- * Module: Cpf (Cadastro de Pessoas Físicas)
+ * Validocs - document and pattern validator library.
+ * Module: CPF (Cadastro de Pessoas Físicas)
  */
 
 /**
