@@ -1,7 +1,7 @@
 {
 	"name": "validocs",
 	"version": "1.0.0",
-	"description": "Validator for multiple documents",
+	"description": "Documents and patterns validator library",
 	"main": "./index.js",
 	"types": "./index.d.ts",
 	"contributors": [
