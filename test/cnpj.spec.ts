@@ -93,6 +93,38 @@ describe('cnpj', () => {
 		});
 	});
 
+	describe('branches', () => {
+		test('Should return the number of branches of a given invalid CNPJ (Options default)', () => {
+			const cnpj: CNPJ.Cnpj = '11111111000122';
+			const expected = 1;
+			expect(CNPJ.branches(cnpj)).toBe(expected);
+		});
+
+		test('Should return undefined branches for a given invalid CNPJ (Options strict = true)', () => {
+			const cnpj: CNPJ.Cnpj = '11111111000122';
+			expect(CNPJ.branches(cnpj, { strict: true })).toBeUndefined();
+		});
+
+		test('Should return undefined branches for a given incomplete CNPJ (Options default)', () => {
+			const cnpj: CNPJ.Cnpj = '1111111100012';
+			expect(CNPJ.branches(cnpj)).toBeUndefined();
+		});
+
+		test('Should return the number of branches of a given valid CNPJ (Options default)', () => {
+			const branches = 1;
+			const cnpj: CNPJ.Cnpj = CNPJ.make({ branches: branches });
+			const expected = branches;
+			expect(CNPJ.branches(cnpj)).toBe(expected);
+		});
+
+		test('Should return the number of branches of a given valid CNPJ (Options strict = true)', () => {
+			const branches = 1;
+			const cnpj: CNPJ.Cnpj = CNPJ.make({ branches: branches });
+			const expected = branches;
+			expect(CNPJ.branches(cnpj, { strict: true })).toBe(expected);
+		});
+	});
+
 	describe('make', () => {
 		test('Should make a new random formated (by default) Cnpj', () => {
 			const cnpj: CNPJ.Cnpj = CNPJ.make();

@@ -179,12 +179,13 @@ export function test(cpf: Cpf, { strict = false }: Options = {}): boolean {
 
 	return vd === base.substr(-cpfDigitLength) && (strict ? cpfStrictRegex.test(cpf) : true);
 }
+
 /**
  * Gets the CPF fiscal region
  * @param { Cpf } cpf
  * @param { Options } options options
  * @param { boolean } [options.strict=true] also tests if the CPF is valid
- * @returns {string | undefined}
+ * @returns {string | undefined} the fiscal region
  */
 export function region(cpf: Cpf, { strict = false }: Options = {}): string | undefined {
 	const base = cpf.replace(cpfDigitRegex, '');

@@ -3,6 +3,8 @@
  * Module: CNPJ (Cadastro Nacional de Pessoas Jurídicas)
  */
 
+import CNPJ from '.';
+
 /**
  * Regular expression to match digits only
  * @constant
@@ -142,6 +144,23 @@ export function test(cnpj: Cnpj, { strict = false }: Options = {}): boolean {
 }
 
 /**
+ * Gets the CNPJ branches number
+ * @param { Cnpj } cnpj
+ * @param { Options } options options
+ * @param { boolean } [options.strict=true] also tests if the CNPJ is valid
+ * @returns {number | undefined} number of branches
+ */
+export function branches(cnpj: Cnpj, { strict = false }: Options = {}): number | undefined {
+	const base = cnpj.replace(cnpjDigitRegex, '');
+
+	if ((strict && !test(base)) || base.length !== CNPJ_UNMASKED_LENGTH) {
+		return undefined;
+	}
+
+	return Number(base.substr(cnpjBaseLength, cnpjBranchesLength));
+}
+
+/**
  * Makes a new random CNPJ
  * @param { ExtendedOptions } options
  * @param { boolean } [options.strict=true] CNPJ formated string
@@ -172,15 +191,16 @@ export function make({ strict = true, branches = 1 }: ExtendedOptions = {}): Cnp
  * @param { string } base the base to be used to calculate
  * @returns { number } the calculated digit
  */
-
 export function digit(base: string): number {
+	const mul = '6543298765432'.split('');
+	const mod = 11;
 	const digit =
 		[
 			...new Array(13 - base.replace(cnpjDigitRegex, '').length).fill('0'),
 			...base.replace(cnpjDigitRegex, '').split('')
 		]
-			.map((number, index) => Number(number) * Number('6543298765432'.split('')[index]))
-			.reduce((accumulator, number) => (accumulator += number)) % 11;
+			.map((number, index) => Number(number) * Number(mul[index]))
+			.reduce((accumulator, number) => (accumulator += number)) % mod;
 
-	return [11 - digit, 0][Number(digit < cnpjDigitLength)];
+	return [mod - digit, 0][Number(digit < cnpjDigitLength)];
 }

@@ -9,7 +9,8 @@
 		"alwaysStrict": true,
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
-		"outDir": "dist"
+		"outDir": "dist",
+		"resolveJsonModule": true
 	},
 	"exclude": [".script", "coverage", "dist", "node_modules", "test"]
 }

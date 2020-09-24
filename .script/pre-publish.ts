@@ -1,14 +1,14 @@
 import file from 'fs';
 import path from 'path';
-const conf = require('./conf.json');
+import cfg from './cfg.json';
 
-const origin = path.resolve(conf.package);
-const target = path.resolve(path.basename('dist'), conf.package);
+const origin = path.resolve(cfg.package);
+const target = path.resolve(path.basename('dist'), cfg.package);
 
 const data = require(origin);
 
 (() => {
-	conf.exclude.forEach((key: string) => {
+	cfg.exclude.forEach((key: string) => {
 		if (key in data) {
 			delete data[key];
 		}
