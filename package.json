@@ -8,7 +8,7 @@
 		"Fabio Marciano"
 	],
 	"scripts": {
-		"test": "jest --bail --forceExit --detectOpenHandles --runInBand --logHeapUsage",
+		"test": "jest --verbose --bail --forceExit --detectOpenHandles --runInBand --logHeapUsage",
 		"test:watch": "jest --watchAll",
 		"test:coverage": "jest --coverage",
 		"lint": "eslint . --ext .ts",
