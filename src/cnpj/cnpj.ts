@@ -3,8 +3,6 @@
  * Module: CNPJ (Cadastro Nacional de Pessoas Jurídicas)
  */
 
-import CNPJ from '.';
-
 /**
  * Regular expression to match digits only
  * @constant
@@ -192,7 +190,7 @@ export function make({ strict = true, branches = 1 }: ExtendedOptions = {}): Cnp
  * @returns { number } the calculated digit
  */
 export function digit(base: string): number {
-	const mul = '6543298765432'.split('');
+	const mul = [6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2];
 	const mod = 11;
 	const digit =
 		[
