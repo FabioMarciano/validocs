@@ -1,5 +1,5 @@
 /**
- * Validocs - document and pattern validator library.
+ * Validocs - library for document and pattern validation.
  */
 
 import * as CNPJ from './cnpj';

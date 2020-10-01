@@ -1,7 +1,7 @@
 {
 	"name": "validocs",
 	"version": "1.0.0",
-	"description": "Documents and patterns validator library",
+	"description": "Library for document and pattern validation",
 	"main": "./index.js",
 	"types": "./index.d.ts",
 	"contributors": [
@@ -17,7 +17,8 @@
 	"keywords": [
 		"document",
 		"validator",
-		"cpf"
+		"cpf",
+		"cnpj"
 	],
 	"author": {
 		"name": "Fabio Marciano"

@@ -1,6 +1,6 @@
 # Validocs
 
-**Validocs** is a documents and patterns validator library.
+**Validocs** library for document and pattern validation.
 
 # Collaborators
 
