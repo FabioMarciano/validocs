@@ -18,7 +18,11 @@ This project is licensed under the terms of the MIT license.
 $ npm install validocs --save
 ```
 
+---
+
 ## Usage
+
+_Typescript_ example:
 
 Import and use a module:
 
@@ -42,21 +46,27 @@ The projects wiki is available at [github](https://github.com/FabioMarciano/vali
 $ npm run test
 ```
 
+---
+
 ## Coverage
 
-This command runs all tests and outputs a report[^1] about the the tests coverage.
+This command runs all tests and outputs a report<sup>1</sup> about its coverage.
 
 ```shell
 $ npm run test:coverage
 ```
 
-[^1] The report outputs at **coverage/lcov-report**.
+<sup>1</sup> The report outputs at **coverage** folder.
 
-## Watch files
+---
+
+## Watching files
 
 ```shell
 $ npm run test:watch
 ```
+
+---
 
 ## ESLint
 
@@ -64,10 +74,12 @@ $ npm run test:watch
 $ npm run lint
 ```
 
-# Build
+---
 
-The command builds for distribuition at **dist** folder.
+# Build
 
 ```shell
 $ npm run build
 ```
+
+<sup>\*</sup> Builds at **dist** folder
