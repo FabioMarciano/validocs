@@ -50,8 +50,14 @@ $ npm run lint
 
 # Build
 
+This command builds the distribuition<sup>1</sup>.
+
 ```shell
 $ npm run build
 ```
 
-<sup>\*</sup> Builds at **dist** folder
+<sup>1</sup> Outputs the **dist** folder
+
+# Usage
+
+Go to [validocs project wiki page](https://github.com/FabioMarciano/validocs/wiki) to see how to use it.
