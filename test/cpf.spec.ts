@@ -4,7 +4,7 @@
 
 import { CPF } from '../src';
 
-describe('country / brazil / cpf', () => {
+describe('CPF', () => {
 	describe('format', () => {
 		test('Should format a given full length Cpf', () => {
 			const cpf: CPF.Cpf = '11111111111';

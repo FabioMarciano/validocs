@@ -4,7 +4,7 @@
 
 import { CNPJ } from '../src';
 
-describe('cnpj', () => {
+describe('CNPJ', () => {
 	describe('format', () => {
 		test('Should format a given full length Cnpj', () => {
 			const cnpj: CNPJ.Cnpj = '11111111111111';
