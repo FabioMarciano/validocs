@@ -31,7 +31,7 @@ const cpfDigitLength = 2;
  * Fiscal Region constant list
  * @constant
  */
-export const CPF_FISCAL_REGION_DATA: string[][] = [
+export const FISCAL_REGION_DATA: string[][] = [
 	['RS'],
 	['DF', 'GO', 'MT', 'MS', 'TO'],
 	['AC', 'AP', 'AM', 'PA', 'RO', 'RR'],
@@ -48,25 +48,25 @@ export const CPF_FISCAL_REGION_DATA: string[][] = [
  * CPF index of fiscal region digit (unmasked)
  * @constant
  */
-export const CPF_UNMASKED_FISCAL_REGION_DIGIT_INDEX = 8;
+export const UNMASKED_FISCAL_REGION_DIGIT_INDEX = 8;
 
 /**
  * CPF index of fiscal region digit (formated)
  * @constant
  */
-export const CPF_FORMATED_FISCAL_REGION_DIGIT_INDEX = 10;
+export const FORMATED_FISCAL_REGION_DIGIT_INDEX = 10;
 
 /**
  * CPF unmasked length (with digits)
  * @constant
  */
-export const CPF_UNMASKED_LENGTH: number = cpfBaseLength + cpfDigitLength;
+export const UNMASKED_LENGTH: number = cpfBaseLength + cpfDigitLength;
 
 /**
  * CPF formated length (with digits)
  * @constant
  */
-export const CPF_FORMATED_LENGTH: number = CPF_UNMASKED_LENGTH + 3;
+export const FORMATED_LENGTH: number = UNMASKED_LENGTH + 3;
 
 /**
  * The CPF Number type definition
@@ -116,7 +116,7 @@ export interface ExtendedOptions extends Options {
 export function format(cpf: Cpf): Cpf {
 	const base = cpf.replace(/[^\d]/g, '');
 
-	if (base.length !== CPF_UNMASKED_LENGTH) {
+	if (base.length !== UNMASKED_LENGTH) {
 		return mask(base);
 	}
 
@@ -155,7 +155,7 @@ export function sequence(cpf: Cpf): boolean {
 	return new Array<number>(10)
 		.fill(0)
 		.some((_: number, index: number) =>
-			new RegExp(`${index}{${CPF_UNMASKED_LENGTH}}`).test(cpf.replace(cpfDigitRegex, ''))
+			new RegExp(`${index}{${UNMASKED_LENGTH}}`).test(cpf.replace(cpfDigitRegex, ''))
 		);
 }
 
@@ -169,8 +169,8 @@ export function sequence(cpf: Cpf): boolean {
 export function test(cpf: Cpf, { strict = false }: Options = {}): boolean {
 	const base = cpf.replace(cpfDigitRegex, '');
 
-	/** CPF length must be 11 and must not be a sequence */
-	if (base.length !== CPF_UNMASKED_LENGTH || sequence(base)) {
+	/** CPF length must be 11 (UNMASKED_LENGTH) and must not be a sequence */
+	if (base.length !== UNMASKED_LENGTH || sequence(base)) {
 		return false;
 	}
 
@@ -194,8 +194,8 @@ export function region(cpf: Cpf, { strict = false }: Options = {}): string | und
 		return undefined;
 	}
 
-	return base.length === CPF_UNMASKED_LENGTH
-		? CPF_FISCAL_REGION_DATA[Number(base[CPF_UNMASKED_FISCAL_REGION_DIGIT_INDEX])].join(' ')
+	return base.length === UNMASKED_LENGTH
+		? FISCAL_REGION_DATA[Number(base[UNMASKED_FISCAL_REGION_DIGIT_INDEX])].join(' ')
 		: undefined;
 }
 
@@ -233,7 +233,7 @@ export function digit(base: string): number {
 			.replace(cpfDigitRegex, '')
 			.split('')
 			.map((number, index, origin) => Number(number) * (origin.length + 1 - index))
-			.reduce((accumulator, number) => accumulator + number) % 11;
+			.reduce((accumulator, number) => accumulator + number) % UNMASKED_LENGTH;
 
-	return [CPF_UNMASKED_LENGTH - digit, 0][Number(digit < cpfDigitLength)];
+	return [UNMASKED_LENGTH - digit, 0][Number(digit < cpfDigitLength)];
 }

@@ -128,12 +128,12 @@ describe('CNPJ', () => {
 	describe('make', () => {
 		test('Should make a new random formated (by default) Cnpj', () => {
 			const cnpj: CNPJ.Cnpj = CNPJ.make();
-			expect(cnpj.length).toBe(CNPJ.CNPJ_FORMATED_LENGTH);
+			expect(cnpj.length).toBe(CNPJ.FORMATED_LENGTH);
 		});
 
 		test('Should make a new random unmasked Cnpj', () => {
 			const cnpj: CNPJ.Cnpj = CNPJ.make({ strict: false });
-			expect(cnpj.length).toBe(CNPJ.CNPJ_UNMASKED_LENGTH);
+			expect(cnpj.length).toBe(CNPJ.UNMASKED_LENGTH);
 		});
 
 		test('Should make a new random formated Cnpj with given branch number', () => {
