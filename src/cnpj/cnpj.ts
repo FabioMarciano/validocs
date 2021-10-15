@@ -37,13 +37,13 @@ const cnpjDigitLength = 2;
  * CNPJ unmasked length (with digits)
  * @constant
  */
-export const CNPJ_UNMASKED_LENGTH: number = cnpjBaseLength + cnpjBranchesLength + cnpjDigitLength;
+export const UNMASKED_LENGTH: number = cnpjBaseLength + cnpjBranchesLength + cnpjDigitLength;
 
 /**
  * CNPJ formated length (with digits)
  * @constant
  */
-export const CNPJ_FORMATED_LENGTH: number = CNPJ_UNMASKED_LENGTH + 4;
+export const FORMATED_LENGTH: number = UNMASKED_LENGTH + 4;
 
 /**
  * The CNPJ Number type definition
@@ -76,7 +76,7 @@ export interface ExtendedOptions extends Options {
 export function format(cnpj: Cnpj): Cnpj {
 	const base = cnpj.replace(/[^\d]/g, '');
 
-	if (base.length !== CNPJ_UNMASKED_LENGTH) {
+	if (base.length !== UNMASKED_LENGTH) {
 		return mask(base);
 	}
 
@@ -116,7 +116,7 @@ export function sequence(cnpj: Cnpj): boolean {
 	return new Array<number>(14)
 		.fill(0)
 		.some((_: number, index: number) =>
-			new RegExp(`${index}{${CNPJ_UNMASKED_LENGTH}}`).test(cnpj.replace(cnpjDigitRegex, ''))
+			new RegExp(`${index}{${UNMASKED_LENGTH}}`).test(cnpj.replace(cnpjDigitRegex, ''))
 		);
 }
 
@@ -151,7 +151,7 @@ export function test(cnpj: Cnpj, { strict = false }: Options = {}): boolean {
 export function branches(cnpj: Cnpj, { strict = false }: Options = {}): number | undefined {
 	const base = cnpj.replace(cnpjDigitRegex, '');
 
-	if ((strict && !test(base)) || base.length !== CNPJ_UNMASKED_LENGTH) {
+	if ((strict && !test(base)) || base.length !== UNMASKED_LENGTH) {
 		return undefined;
 	}
 
@@ -194,7 +194,7 @@ export function digit(base: string): number {
 	const mod = 11;
 	const digit =
 		[
-			...new Array(13 - base.replace(cnpjDigitRegex, '').length).fill('0'),
+			...new Array(mul.length - base.replace(cnpjDigitRegex, '').length).fill('0'),
 			...base.replace(cnpjDigitRegex, '').split('')
 		]
 			.map((number, index) => Number(number) * Number(mul[index]))

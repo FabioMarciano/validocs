@@ -96,13 +96,13 @@ describe('CPF', () => {
 	describe('region', () => {
 		test('Should return the correct region for a given CPF.Cpf (Options default)', () => {
 			const cpf: CPF.Cpf = CPF.make({ fiscalRegion: CPF.FiscalRegion.FR01 });
-			const expected = CPF.CPF_FISCAL_REGION_DATA[CPF.FiscalRegion.FR01].join(' ');
+			const expected = CPF.FISCAL_REGION_DATA[CPF.FiscalRegion.FR01].join(' ');
 			expect(CPF.region(cpf)).toBe(expected);
 		});
 
 		test('Should return the correct region for a given valid CPF.Cpf (Options strict = true)', () => {
 			const cpf: CPF.Cpf = CPF.make({ strict: true, fiscalRegion: CPF.FiscalRegion.FR01 });
-			const expected = CPF.CPF_FISCAL_REGION_DATA[CPF.FiscalRegion.FR01].join(' ');
+			const expected = CPF.FISCAL_REGION_DATA[CPF.FiscalRegion.FR01].join(' ');
 			expect(CPF.region(cpf, { strict: true })).toBe(expected);
 		});
 
@@ -122,24 +122,24 @@ describe('CPF', () => {
 	describe('make', () => {
 		test('Should make a new random formated (by default) Cpf', () => {
 			const cpf: CPF.Cpf = CPF.make();
-			expect(cpf.length).toBe(CPF.CPF_FORMATED_LENGTH);
+			expect(cpf.length).toBe(CPF.FORMATED_LENGTH);
 		});
 
 		test('Should make a new random unmasked Cpf', () => {
 			const cpf: CPF.Cpf = CPF.make({ strict: false });
-			expect(cpf.length).toBe(CPF.CPF_UNMASKED_LENGTH);
+			expect(cpf.length).toBe(CPF.UNMASKED_LENGTH);
 		});
 
 		test('Should make a new random formated Cpf with given region', () => {
 			const fiscalRegion: CPF.FiscalRegion = CPF.FiscalRegion.FR01;
 			const cpf: CPF.Cpf = CPF.make({ strict: true, fiscalRegion: fiscalRegion });
-			expect(cpf[CPF.CPF_FORMATED_FISCAL_REGION_DIGIT_INDEX]).toBe(`${fiscalRegion}`);
+			expect(cpf[CPF.FORMATED_FISCAL_REGION_DIGIT_INDEX]).toBe(`${fiscalRegion}`);
 		});
 
 		test('Should make a new random unmasked Cpf with given region', () => {
 			const fiscalRegion: CPF.FiscalRegion = CPF.FiscalRegion.FR01;
 			const cpf: CPF.Cpf = CPF.make({ strict: false, fiscalRegion: fiscalRegion });
-			expect(cpf[CPF.CPF_UNMASKED_FISCAL_REGION_DIGIT_INDEX]).toBe(`${fiscalRegion}`);
+			expect(cpf[CPF.UNMASKED_FISCAL_REGION_DIGIT_INDEX]).toBe(`${fiscalRegion}`);
 		});
 	});
 
