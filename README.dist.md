@@ -2,6 +2,17 @@
 
 **Validocs** library for document and pattern validation.
 
+# Features
+
+The current list of documents and patterns implemented on this project are:
+
+- **CPF** \
+   Cadastro Pessoas Físicas (_brazilian federal document required for natural persons_)
+- **CNPJ** \
+   Cadastro Nacional de Pessoas Jurídicas (_brazilian federal document required for legal persons_)
+- **PIS** \
+   Programa de Integração Social (_brazilian federal document required for natural persons_)
+
 # Collaborators
 
 - Fabio Marciano <fabioamarciano@gmail.com>
