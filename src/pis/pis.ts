@@ -116,7 +116,7 @@ export function sequence(pis: Pis): boolean {
  * Tests if PIS is valid
  * @param { Pis } pis - the PIS to test
  * @param { Options } options options to test PIS
- * @param { boolean } [options.strict=true] consider only valid and well-formed masked PISs
+ * @param { boolean } [options.strict=false] consider both valid and non-well-formed masked PISs
  * @returns { boolean } PIS is valid
  */
 export function test(pis: Pis, { strict = false }: Options = {}): boolean {
