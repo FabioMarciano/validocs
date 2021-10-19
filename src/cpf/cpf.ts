@@ -163,7 +163,7 @@ export function sequence(cpf: Cpf): boolean {
  * Tests if CPF is valid
  * @param { Cpf } cpf - the CPF to test
  * @param { Options } options options to test CPF
- * @param { boolean } [options.strict=true] consider only valid and well-formed masked CPFs
+ * @param { boolean } [options.strict=false] consider both valid and non-well-formed masked CPFs
  * @returns { boolean } CPF is valid
  */
 export function test(cpf: Cpf, { strict = false }: Options = {}): boolean {
