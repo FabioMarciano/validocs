@@ -4,16 +4,28 @@
  */
 
 /**
- * Regular expression to match digits only
+ * Cnpj calculation base
  * @constant
  */
-const cnpjDigitRegex = /[^\d]/g;
+const cnpjCalculationBase = 36;
+
+/**
+ * Ascii offset for digits calculation
+ * @constant
+ */
+const cnpjAsciiOffsetValue = 48;
+
+/**
+ * Regular expression to match digits and alpha characters only
+ * @constant
+ */
+const cnpjDigitRegex = /[^\dA-Z]/gi;
 
 /**
  * Regular expression to match strict formated CNPJ
  * @constant
  */
-const cnpjStrictRegex = /[\d]{2}\.[\d]{3}\.[\d]{3}\/[\d]{4}-[\d]{2}/g;
+const cnpjStrictRegex = /[\dA-Z]{2}\.[\dA-Z]{3}\.[\dA-Z]{3}\/[\dA-Z]{4}-[\d]{2}/gi;
 
 /**
  * CNPJ base length (without digits)
@@ -74,13 +86,12 @@ export interface ExtendedOptions extends Options {
  * @returns { Cnpj } - the formated value
  */
 export function format(cnpj: Cnpj): Cnpj {
-	const base = cnpj.replace(/[^\d]/g, '');
-
+	const base = cnpj.toUpperCase().replace(/[^\dA-Z]/gi, '');
 	if (base.length !== UNMASKED_LENGTH) {
 		return mask(base);
 	}
 
-	return base.replace(/^(\d{2})(\d{3})(\d{3})(\d{4})(\d{2})$/, '$1.$2.$3/$4-$5');
+	return base.replace(/^([\dA-Z]{2})([\dA-Z]{3})([\dA-Z]{3})([\dA-Z]{4})(\d{2})$/, '$1.$2.$3/$4-$5');
 }
 
 /**
@@ -90,12 +101,13 @@ export function format(cnpj: Cnpj): Cnpj {
  */
 export function mask(cnpj: Cnpj): Cnpj {
 	return cnpj
-		.replace(/\D/g, '')
-		.replace(/(\d{2})(\d)/, '$1.$2')
-		.replace(/(\d{3})(\d)/, '$1.$2')
-		.replace(/(\d{3})(\d{1,4})/, '$1/$2')
-		.replace(/(\d{4})(\d{1,2})/, '$1-$2')
-		.replace(/(-\d{2})\d+?$/, '$1');
+		.toUpperCase()
+		.replace(/[^\dA-Z]/gi, '')
+		.replace(/([\dA-Z]{2})([\dA-Z])/, '$1.$2')
+		.replace(/([\dA-Z]{3})([\dA-Z])/, '$1.$2')
+		.replace(/([\dA-Z]{3})([\dA-Z]{1,4})/, '$1/$2')
+		.replace(/([\dA-Z]{4})([\dA-Z]{1,2})/, '$1-$2')
+		.replace(/(-[\dA-Z]{2})[\dA-Z]+?$/, '$1');
 }
 
 /**
@@ -113,11 +125,8 @@ export function unmask(cnpj: Cnpj): Cnpj {
  * @returns { boolean } CNPJ is a sequence
  */
 export function sequence(cnpj: Cnpj): boolean {
-	return new Array<number>(14)
-		.fill(0)
-		.some((_: number, index: number) =>
-			new RegExp(`${index}{${UNMASKED_LENGTH}}`).test(cnpj.replace(cnpjDigitRegex, ''))
-		);
+	const base = cnpj.replace(cnpjDigitRegex, '').split('');
+	return !base.some((char: string) => char !== base[0]);
 }
 
 /**
@@ -128,17 +137,18 @@ export function sequence(cnpj: Cnpj): boolean {
  * @returns { boolean } CNPJ is valid
  */
 export function test(cnpj: Cnpj, { strict = false }: Options = {}): boolean {
-	const base = cnpj.replace(cnpjDigitRegex, '');
+	const base = cnpj.toUpperCase().replace(cnpjDigitRegex, '');
+	const size = cnpjBaseLength + cnpjBranchesLength + cnpjDigitLength;
 
 	/** CNPJ length must be 14 and must not be a sequence */
-	if (base.length !== 14 || sequence(base)) {
+	if (base.length !== size || sequence(base)) {
 		return false;
 	}
 
-	let vd = `${digit(base.substr(0, cnpjBaseLength + cnpjBranchesLength))}`;
-	vd += `${digit(base.substr(0, cnpjBaseLength + cnpjBranchesLength) + vd)}`;
+	let vd = `${digit(base.slice(0, cnpjBaseLength + cnpjBranchesLength))}`;
+	vd += `${digit(base.slice(0, cnpjBaseLength + cnpjBranchesLength) + vd)}`;
 
-	return vd === base.substr(-cnpjDigitLength) && (strict ? cnpjStrictRegex.test(cnpj) : true);
+	return vd === base.slice(-cnpjDigitLength) && (strict ? cnpjStrictRegex.test(cnpj) : true);
 }
 
 /**
@@ -149,13 +159,13 @@ export function test(cnpj: Cnpj, { strict = false }: Options = {}): boolean {
  * @returns {number | undefined} number of branches
  */
 export function branches(cnpj: Cnpj, { strict = false }: Options = {}): number | undefined {
-	const base = cnpj.replace(cnpjDigitRegex, '');
+	const base = cnpj.toUpperCase().replace(cnpjDigitRegex, '');
 
 	if ((strict && !test(base)) || base.length !== UNMASKED_LENGTH) {
 		return undefined;
 	}
 
-	return Number(base.substr(cnpjBaseLength, cnpjBranchesLength));
+	return Number(parseInt(base.slice(cnpjBaseLength, cnpjBaseLength + cnpjBranchesLength), cnpjCalculationBase));
 }
 
 /**
@@ -166,11 +176,17 @@ export function branches(cnpj: Cnpj, { strict = false }: Options = {}): number |
  * @returns { Cnpj } random CNPJ
  */
 export function make({ strict = true, branches = 1 }: ExtendedOptions = {}): Cnpj {
+	const charEnabledList = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('');
 	let base: Cnpj = [
-		...new Array<number>(8).fill(0).map(() => Math.floor(Math.random() * 9)),
+		...new Array<number>(cnpjBaseLength)
+			.fill(0)
+			.map(() => charEnabledList[Math.floor(Math.random() * charEnabledList.length)]),
 		...[
-			...Array(cnpjBranchesLength - branches.toString().split('').slice(0, cnpjBranchesLength).length).fill(0),
-			...branches.toString().split('').slice(0, cnpjBranchesLength)
+			...Array(
+				cnpjBranchesLength -
+					parseInt(`${branches}`, cnpjCalculationBase).toString().split('').slice(0, cnpjBranchesLength).length
+			).fill(0),
+			...parseInt(`${branches}`, cnpjCalculationBase).toString().split('').slice(0, cnpjBranchesLength)
 		]
 	].join('');
 
@@ -197,7 +213,7 @@ export function digit(base: string): number {
 			...new Array(mul.length - base.replace(cnpjDigitRegex, '').length).fill('0'),
 			...base.replace(cnpjDigitRegex, '').split('')
 		]
-			.map((number, index) => Number(number) * Number(mul[index]))
+			.map((char, index) => Number(char.toUpperCase().charCodeAt(0) - cnpjAsciiOffsetValue) * Number(mul[index]))
 			.reduce((accumulator, number) => (accumulator += number)) % mod;
 
 	return [mod - digit, 0][Number(digit < cnpjDigitLength)];

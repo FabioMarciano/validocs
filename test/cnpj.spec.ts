@@ -17,6 +17,18 @@ describe('CNPJ', () => {
 			const expected: CNPJ.Cnpj = '11.111.111/1';
 			expect(CNPJ.format(cnpj)).toBe(expected);
 		});
+
+		test('Should format a given full length Cnpj using alpha characters', () => {
+			const cnpj: CNPJ.Cnpj = 'aaaaaaaaaaaa11';
+			const expected: CNPJ.Cnpj = 'AA.AAA.AAA/AAAA-11';
+			expect(CNPJ.format(cnpj)).toBe(expected);
+		});
+
+		test('Should format a given partial length Cnpj using alpha characters', () => {
+			const cnpj: CNPJ.Cnpj = 'aaaaaaaaa';
+			const expected: CNPJ.Cnpj = 'AA.AAA.AAA/A';
+			expect(CNPJ.format(cnpj)).toBe(expected);
+		});
 	});
 
 	describe('mask', () => {
@@ -29,6 +41,18 @@ describe('CNPJ', () => {
 		test('Should mask a given partial length Cnpj', () => {
 			const cnpj: CNPJ.Cnpj = '111111111';
 			const expected: CNPJ.Cnpj = '11.111.111/1';
+			expect(CNPJ.mask(cnpj)).toBe(expected);
+		});
+
+		test('Should mask a given full length Cnpj using alpha characters', () => {
+			const cnpj: CNPJ.Cnpj = 'aaaaaaaaaaaa11';
+			const expected: CNPJ.Cnpj = 'AA.AAA.AAA/AAAA-11';
+			expect(CNPJ.mask(cnpj)).toBe(expected);
+		});
+
+		test('Should mask a given partial length Cnpj using alpha characters', () => {
+			const cnpj: CNPJ.Cnpj = 'aaaaaaaaa';
+			const expected: CNPJ.Cnpj = 'AA.AAA.AAA/A';
 			expect(CNPJ.mask(cnpj)).toBe(expected);
 		});
 	});
@@ -45,6 +69,18 @@ describe('CNPJ', () => {
 			const expected: CNPJ.Cnpj = '11111111';
 			expect(CNPJ.unmask(cnpj)).toBe(expected);
 		});
+
+		test('Should unmask a given full length Cnpj using alpha characters', () => {
+			const cnpj: CNPJ.Cnpj = 'AA.AAA.AAA/AAAA-11';
+			const expected: CNPJ.Cnpj = 'AAAAAAAAAAAA11';
+			expect(CNPJ.unmask(cnpj)).toBe(expected);
+		});
+
+		test('Should unmask a given partial length Cnpj using alpha characters', () => {
+			const cnpj: CNPJ.Cnpj = 'AA.AAA.AAA';
+			const expected: CNPJ.Cnpj = 'AAAAAAAA';
+			expect(CNPJ.unmask(cnpj)).toBe(expected);
+		});
 	});
 
 	describe('sequence', () => {
@@ -56,6 +92,18 @@ describe('CNPJ', () => {
 
 		test('Should return false for a given non-sequence CNPJ.Cnpj', () => {
 			const cnpj: CNPJ.Cnpj = '12.345.678/0009-01';
+			const expected = false;
+			expect(CNPJ.sequence(cnpj)).toBe(expected);
+		});
+
+		test('Should return true for a given sequence CNPJ.Cnpj using alpha characters', () => {
+			const cnpj: CNPJ.Cnpj = 'AA.AAA.AAA/AAA-AA';
+			const expected = true;
+			expect(CNPJ.sequence(cnpj)).toBe(expected);
+		});
+
+		test('Should return false for a given non-sequence CNPJ.Cnpj using alpha characters', () => {
+			const cnpj: CNPJ.Cnpj = 'AB.CDE.FGH/IJKL-MN';
 			const expected = false;
 			expect(CNPJ.sequence(cnpj)).toBe(expected);
 		});
