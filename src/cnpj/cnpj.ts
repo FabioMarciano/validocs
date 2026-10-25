@@ -138,15 +138,14 @@ export function sequence(cnpj: Cnpj): boolean {
  */
 export function test(cnpj: Cnpj, { strict = false }: Options = {}): boolean {
 	const base = cnpj.toUpperCase().replace(cnpjDigitRegex, '');
-	const size = cnpjBaseLength + cnpjBranchesLength + cnpjDigitLength;
 
 	/** CNPJ length must be 14 and must not be a sequence */
-	if (base.length !== size || sequence(base)) {
+	if (base.length !== UNMASKED_LENGTH || sequence(base)) {
 		return false;
 	}
 
-	let vd = `${digit(base.slice(0, cnpjBaseLength + cnpjBranchesLength))}`;
-	vd += `${digit(base.slice(0, cnpjBaseLength + cnpjBranchesLength) + vd)}`;
+	let vd = `${digit(base.slice(0, UNMASKED_LENGTH - cnpjDigitLength))}`;
+	vd += `${digit(base.slice(0, UNMASKED_LENGTH - cnpjDigitLength) + vd)}`;
 
 	return vd === base.slice(-cnpjDigitLength) && (strict ? cnpjStrictRegex.test(cnpj) : true);
 }
@@ -161,11 +160,9 @@ export function test(cnpj: Cnpj, { strict = false }: Options = {}): boolean {
 export function branches(cnpj: Cnpj, { strict = false }: Options = {}): number | undefined {
 	const base = cnpj.toUpperCase().replace(cnpjDigitRegex, '');
 
-	if ((strict && !test(base)) || base.length !== UNMASKED_LENGTH) {
-		return undefined;
-	}
+	const check: boolean = (strict && !test(base)) || base.length !== UNMASKED_LENGTH;
 
-	return Number(parseInt(base.slice(cnpjBaseLength, cnpjBaseLength + cnpjBranchesLength), cnpjCalculationBase));
+	return [Number(parseInt(base.slice(cnpjBaseLength, cnpjBaseLength + cnpjBranchesLength), cnpjCalculationBase)), undefined][Number(check)];
 }
 
 /**
