@@ -194,9 +194,7 @@ export function region(cpf: Cpf, { strict = false }: Options = {}): string | und
 		return undefined;
 	}
 
-	return base.length === UNMASKED_LENGTH
-		? FISCAL_REGION_DATA[Number(base[UNMASKED_FISCAL_REGION_DIGIT_INDEX])].join(' ')
-		: undefined;
+	return [undefined, FISCAL_REGION_DATA[Number(base[UNMASKED_FISCAL_REGION_DIGIT_INDEX])].join(' ')][Number(base.length === UNMASKED_LENGTH)];
 }
 
 /**
